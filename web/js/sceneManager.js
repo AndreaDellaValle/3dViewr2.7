@@ -1,6 +1,7 @@
-			var fileName = "../../{{ file }}";
+			//var fileName = "../3d_file_storage/porsche.obj";
 
-
+			var fileName =
+			"../3d_file_storage/" + document.getElementById("weila").innerHTML + ".obj";
 			var container;
 			var camera, scene, renderer;
 			var mouseX = 0, mouseY = 0;
@@ -11,27 +12,29 @@
 			function init() {
 				container = document.createElement( 'div' );
 				document.body.appendChild( container );
-				camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 1, 2000 );
+				camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 10, 2000 );
 				camera.position.x = 0;
-				camera.position.y = 0;
-				camera.position.z = 100;
+				camera.position.y = 5;
+				camera.position.z = -23;
 				// scene
 				scene = new THREE.Scene();
-				var ambient = new THREE.AmbientLight( 0x101030 );
+				var ambient = new THREE.AmbientLight( 0x808080 );
 				scene.add( ambient );
 				var directionalLight = new THREE.DirectionalLight( 0xffeedd );
 				directionalLight.position.set( 70, 10, 10 );
 				scene.add( directionalLight )
-				// texture
+				
 				var manager = new THREE.LoadingManager();
 				manager.onProgress = function ( item, loaded, total ) {
 					console.log( item, loaded, total );
 				};
+				// texture
 				var texture = new THREE.Texture();
+				
 				var onProgress = function ( xhr ) {
 					if ( xhr.lengthComputable ) {
-						var percentComplete = xhr.loaded / xhr.total * 100;
-						console.log( Math.round(percentComplete, 2) + '% downloaded' );
+						percentComplete = xhr.loaded / xhr.total * 100;
+						console.log( Math.round(percentComplete, 2) + '% downloaded');
 					}
 				};
 				var onError = function ( xhr ) {
@@ -50,7 +53,7 @@
 						}
 					} );
 					object.position.y = 0;
-					object.position.z = -5;
+					object.position.z = 0;
 					object.position.x = 0;
 					scene.add( object );
 				}, onProgress, onError );
