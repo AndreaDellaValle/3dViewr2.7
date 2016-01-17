@@ -52,6 +52,7 @@
                   <li><button id='left' onclick='left();'>Left</button> | <button id='right' onclick='right();'>Right</button></li>
 
                </ul>
+        </div> <!--controls-->
 
 		<script src="../js/three.min.js"></script>
 
@@ -83,7 +84,7 @@
 				container = document.createElement( 'div' );
 				document.body.appendChild( container );
 
-				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
+				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 100, 2000 );
 				camera.position.z = 500;
 
 				// scene

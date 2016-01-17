@@ -15,7 +15,7 @@
 				camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 10, 2000 );
 				camera.position.x = 0;
 				camera.position.y = 5;
-				camera.position.z = -23;
+				camera.position.z = 23;
 				// scene
 				scene = new THREE.Scene();
 				var ambient = new THREE.AmbientLight( 0x808080 );
@@ -88,3 +88,14 @@
 				camera.lookAt( scene.position );
 				renderer.render( scene, camera );
 			}
+			//zoom
+			function zoomIn(){
+              camera.position.z -= 100;
+              camera.updateProjectionMatrix();
+              zoom = camera.position.z;
+            }
+            function zoomOut(){
+              camera.position.z += 100;
+              camera.updateProjectionMatrix();
+              zoom = camera.position.z;
+            }

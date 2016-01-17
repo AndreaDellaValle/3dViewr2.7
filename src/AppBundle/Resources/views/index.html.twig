@@ -4,14 +4,48 @@
 	<style>
 		body { margin: 0; background-color:red; }
 		canvas { width: 100%; height: 100%; color:red;}
+		ul, li {
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+                float:left;
+            }
 		.titolo { color:#D8D8D8; background-color: black; font-size:25px; font-family: akkurat-light; padding-top:10px; padding-left: 15px; width:100%; }
 		.nomeFile { color:#BBBBBB; background-color: black; font-size:25px; font-family: akkurat; font-weight: 700; padding-top:10px; text-align: center;}
 		.testoCentrato { color:#D6D6D6; text-align: center; margin-top: -35px;}
+		button{
+              width: 100px;
+            }
+
+			#info {
+				color: #fff;
+				position: absolute;
+				top: 10px;
+				width: 100%;
+				text-align: center;
+				z-index: 100;
+				display:block;
+			}
+			#info a, .button { color: #f00; font-weight: bold; text-decoration: underline; cursor: pointer }
 	</style>
 </head>
 <body>
 
 	<div class="titolo">ciao fagiano! <div class="testoCentrato"> stai renderizzando <span class="nomeFile" id="weila">porsche</span> ! </div></div>
+
+	<div id='controls'>
+
+               <h4>Controls</h4>
+
+               <ul>
+                  <li><button id='in' onclick='zoomIn();'>Zoom In</button> | <button id='out' onclick='zoomOut();'>Zoom Out</button></li>
+                  <li><button id='rOn' onclick='rotateOn();'>Rotate On</button> | <button id='rOff' onclick='rotateOff();'>Rotate Off</button></li>
+                  <li><button id='wOn' onclick='wireframeOn();'>Wireframe On</button> | <button id='wOff' onclick='wireframeOff();'>Wireframe Off</button></li>
+                  <li><button id='front' onclick='front();'>Front</button> | <button id='back' onclick='back();'>Back</button></li>
+                  <li><button id='left' onclick='left();'>Left</button> | <button id='right' onclick='right();'>Right</button></li>
+
+               </ul>
+        </div> <!--controls-->
 		<script src="../js/three.min.js"></script>
 		<script src="../js/three.OBJLoader.js"></script>
 		<script src="../js/loaders/DDSLoader.js"></script>
