@@ -50,6 +50,7 @@
                   <li><button id='wOn' onclick='wireframeOn();'>Wireframe On</button> | <button id='wOff' onclick='wireframeOff();'>Wireframe Off</button></li>
                   <li><button id='front' onclick='front();'>Front</button> | <button id='back' onclick='back();'>Back</button></li>
                   <li><button id='left' onclick='left();'>Left</button> | <button id='right' onclick='right();'>Right</button></li>
+                  <li><button id='in' onclick='scalePlus();'>SCALE +</button> | <button id='out' onclick='scaleMinus();'>SCALE -</button></li>
 
                </ul>
         </div> <!--controls-->
@@ -84,18 +85,18 @@
 				container = document.createElement( 'div' );
 				document.body.appendChild( container );
 
-				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 100, 2000 );
+				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 100, 4000 );
 				camera.position.z = 500;
 
 				// scene
 
 				scene = new THREE.Scene();
 
-				var ambient = new THREE.AmbientLight( 0x444444 );
+				var ambient = new THREE.AmbientLight( 0xffffff );
 				scene.add( ambient );
 
-				var directionalLight = new THREE.DirectionalLight( 0xffeedd );
-				directionalLight.position.set( 0, 0, 1 ).normalize();
+				var directionalLight = new THREE.DirectionalLight( 0xffffff );
+				directionalLight.position.set( 0, 5, 9 ).normalize();
 				scene.add( directionalLight );
 
 				// model
@@ -114,9 +115,12 @@
 				THREE.Loader.Handlers.add( /\.dds$/i, new THREE.DDSLoader() );
 
 				var loader = new THREE.OBJMTLLoader();
-				loader.load( '../3d_file_storage/polo.obj', '../3d_file_storage/polo.mtl', function ( object ) {
+				loader.load( '../3d_file_storage/lambo/Avent.obj', '../3d_file_storage/lambo/Avent.mtl', function ( object ) {
 
-					object.position.y = - 80;
+					object.position.y = 0;
+					object.scale.x = 50;
+					object.scale.y = 50;
+					object.scale.z = 50;
 					scene.add( object );
 
 				}, onProgress, onError );
@@ -185,6 +189,14 @@
               camera.updateProjectionMatrix();
               zoom = camera.position.z;
             }
+
+            function scalePlus(){
+            object.scale.x += 10;
+			object.scale.y += 10;
+			object.scale.z += 10;
+			camera.updateProjectionMatrix();
+			scale = object.scale.x;
+			}
             //rotazione
             function rotateOn(){
               rotate = true; 
