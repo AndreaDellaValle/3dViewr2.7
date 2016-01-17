@@ -16,4 +16,12 @@ class DefaultController extends Controller
         	'file' => '3d_file_storage/porsche.obj',
        	]);
     }
+
+    /**
+     * @Route("/index_material", name="index_material")
+     */
+    public function index_materialAction()
+    {
+        return $this->render('AppBundle::index_material.html.twig');
+    }
 }

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>OBJ MTL loader</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				font-family: Helvetica;
+				background-color: #000;
+				color: #fff;
+				margin: 0px;
+				overflow: hidden;
+			}
+			ul, li {
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+                float:left;
+            }
+            button{
+              width: 100px;
+            }
+
+			#info {
+				color: #fff;
+				position: absolute;
+				top: 10px;
+				width: 100%;
+				text-align: center;
+				z-index: 100;
+				display:block;
+			}
+			#info a, .button { color: #f00; font-weight: bold; text-decoration: underline; cursor: pointer }
+		</style>
+	</head>
+
+	<body>
+		<div id="info">
+		three.js - OBJMTLLoader test
+		</div>
+
+		<div id='controls'>
+
+               <h4>Controls</h4>
+
+               <ul>
+                  <li><button id='in' onclick='zoomIn();'>Zoom In</button> | <button id='out' onclick='zoomOut();'>Zoom Out</button></li>
+                  <li><button id='rOn' onclick='rotateOn();'>Rotate On</button> | <button id='rOff' onclick='rotateOff();'>Rotate Off</button></li>
+                  <li><button id='wOn' onclick='wireframeOn();'>Wireframe On</button> | <button id='wOff' onclick='wireframeOff();'>Wireframe Off</button></li>
+                  <li><button id='front' onclick='front();'>Front</button> | <button id='back' onclick='back();'>Back</button></li>
+                  <li><button id='left' onclick='left();'>Left</button> | <button id='right' onclick='right();'>Right</button></li>
+
+               </ul>
+
+		<script src="../js/three.min.js"></script>
+
+		<script src="../js/three.DDSLoader.js"></script>
+		<script src="../js/three.MTLLoader.js"></script>
+		<script src="../js/three.OBJMTLLoader.js"></script>
+
+		<script src="../js/Detector.js"></script>
+		<script src="../js/stats.min.js"></script>
+
+		<script>
+
+			var container, stats;
+
+			var camera, scene, renderer;
+
+			var mouseX = 0, mouseY = 0;
+
+			var windowHalfX = window.innerWidth / 2;
+			var windowHalfY = window.innerHeight / 2;
+
+
+			init();
+			animate();
+
+
+			function init() {
+
+				container = document.createElement( 'div' );
+				document.body.appendChild( container );
+
+				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
+				camera.position.z = 500;
+
+				// scene
+
+				scene = new THREE.Scene();
+
+				var ambient = new THREE.AmbientLight( 0x444444 );
+				scene.add( ambient );
+
+				var directionalLight = new THREE.DirectionalLight( 0xffeedd );
+				directionalLight.position.set( 0, 0, 1 ).normalize();
+				scene.add( directionalLight );
+
+				// model
+
+				var onProgress = function ( xhr ) {
+					if ( xhr.lengthComputable ) {
+						var percentComplete = xhr.loaded / xhr.total * 100;
+						console.log( Math.round(percentComplete, 2) + '% downloaded' );
+					}
+				};
+
+				var onError = function ( xhr ) {
+				};
+
+
+				THREE.Loader.Handlers.add( /\.dds$/i, new THREE.DDSLoader() );
+
+				var loader = new THREE.OBJMTLLoader();
+				loader.load( '../3d_file_storage/polo.obj', '../3d_file_storage/polo.mtl', function ( object ) {
+
+					object.position.y = - 80;
+					scene.add( object );
+
+				}, onProgress, onError );
+
+				//
+
+				renderer = new THREE.WebGLRenderer();
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				container.appendChild( renderer.domElement );
+
+				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+
+				//
+
+				window.addEventListener( 'resize', onWindowResize, false );
+
+			}
+
+			function onWindowResize() {
+
+				windowHalfX = window.innerWidth / 2;
+				windowHalfY = window.innerHeight / 2;
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+			}
+
+			function onDocumentMouseMove( event ) {
+
+				mouseX = ( event.clientX - windowHalfX ) / 2;
+				mouseY = ( event.clientY - windowHalfY ) / 2;
+
+			}
+
+			//
+
+			function animate() {
+
+				requestAnimationFrame( animate );
+				render();
+
+			}
+
+			function render() {
+
+				camera.position.x += ( mouseX - camera.position.x ) * .05;
+				camera.position.y += ( - mouseY - camera.position.y ) * .05;
+
+				camera.lookAt( scene.position );
+
+				renderer.render( scene, camera );
+
+			}
+			//zoom
+			function zoomIn(){
+              camera.position.z -= 100;
+              camera.updateProjectionMatrix();
+              zoom = camera.position.z;
+            }
+            function zoomOut(){
+              camera.position.z += 100;
+              camera.updateProjectionMatrix();
+              zoom = camera.position.z;
+            }
+            //rotazione
+            function rotateOn(){
+              rotate = true; 
+            }
+            function rotateOff(){
+              rotate = false;
+            }
+            //wireframe
+            function wireframeOn(){
+              mesh.material.wireframe = true;
+              mesh.material.color = new THREE.Color( 0x6893DE  );
+            }
+            function wireframeOff(){
+              mesh.material.wireframe = false;
+              mesh.material.color = new THREE.Color(0xffffff);
+            }
+            //viste ortogonali
+            function front(){
+              scene.remove(camera);
+              addCamera(0, -6, 1);
+              mesh.rotation.z = 0;
+              camera.fov = zoom;
+              camera.updateProjectionMatrix();
+            }
+            function back(){
+              front();
+              mesh.rotation.z = 3.2; 
+            }
+            function left(){
+              front();
+              mesh.rotation.z = 4.8;             
+            }
+            function right(){
+              front();
+              mesh.rotation.z = 1.6;             
+            }
+		</script>
+
+	</body>
+</html>
