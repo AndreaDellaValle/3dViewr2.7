@@ -4,16 +4,38 @@ namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
     /**
      * @Route("/", name="homepage")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+    	
+    	$form = $this->createFormBuilder()
+    	->add('nomeFile', 'text', array('label'=>''))
+    	//->add('nomeTexture', 'text', array('label'=>''))
+    	->add('renderizza', 'submit', array('label'=>'yosh'))
+    	->getForm();
+
+    	$form ->handleRequest($request);
+
+    	if ($form->isValid()){
+    		$nomeFile = $form->getData()['nomeFile'];
+
+    		return $this->render('AppBundle::index.html.twig', [
+        	'form' => $form->createView(),
+        	'nomeFile' => $nomeFile
+       	]);
+    	}
+    	
+    	$nomeFile = '';
+
         return $this->render('AppBundle::index.html.twig', [
-        	
+        	'form' => $form->createView(),
+        	'nomeFile' => $nomeFile
        	]);
     }
 

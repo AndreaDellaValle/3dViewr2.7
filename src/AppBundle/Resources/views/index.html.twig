@@ -31,9 +31,10 @@
 	</style>
 </head>
 <body>
-
-	<div class="titolo">ciao <span class="nomeUtente">fagiano </span>! <div class="testoCentrato"> stai renderizzando <span class="nomeFile" id="weila">Avent</span> ! scegli un effetto <span class="nomeFile" id="texture">water</span></div></div>
-
+	{{ form_start(form) }}
+	<div class="titolo">ciao <span class="nomeUtente">fagiano </span>! <div class="testoCentrato"> stai renderizzando <span class="nomeFile" id="weila">{{ nomeFile | raw }}</span>{{ form_widget(form.nomeFile) }} ! con effetto <span class="nomeFile" id="texture">alluminio bagnato</span></div></div>
+	{{ form_end(form) }}
+	
 	<div id='controls' class="bottoni">
 
                Controls
