@@ -13,7 +13,7 @@ class DefaultController extends Controller
     public function indexAction()
     {
         return $this->render('AppBundle::index.html.twig', [
-        	'file' => '3d_file_storage/porsche.obj',
+        	
        	]);
     }
 
@@ -23,5 +23,12 @@ class DefaultController extends Controller
     public function index_materialAction()
     {
         return $this->render('AppBundle::index_material.html.twig');
+    }
+    /**
+     * @Route("/object_viewer", name="object_viewer")
+     */
+    public function object_viewerAction()
+    {
+        return $this->render('AppBundle::object_viewer.html.twig');
     }
 }

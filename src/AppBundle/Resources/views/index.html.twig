@@ -11,6 +11,7 @@
                 float:left;
             }
 		.titolo { color:#D8D8D8; background-color: black; font-size:25px; font-family: akkurat-light; padding-top:10px; padding-left: 15px; width:100%; }
+		.bottoni { color:#D8D8D8; background-color: black; font-size:18px; font-family: akkurat-light; padding-top:10px; padding-left: 15px; width:100%; }
 		.nomeFile { color:#BBBBBB; background-color: black; font-size:25px; font-family: akkurat; font-weight: 700; padding-top:10px; text-align: center;}
 		.testoCentrato { color:#D6D6D6; text-align: center; margin-top: -35px;}
 		button{
@@ -31,11 +32,11 @@
 </head>
 <body>
 
-	<div class="titolo">ciao fagiano! <div class="testoCentrato"> stai renderizzando <span class="nomeFile" id="weila">porsche</span> ! </div></div>
+	<div class="titolo">ciao <span class="nomeUtente">fagiano </span>! <div class="testoCentrato"> stai renderizzando <span class="nomeFile" id="weila">Avent</span> ! scegli un effetto <span class="nomeFile" id="texture">water</span></div></div>
 
-	<div id='controls'>
+	<div id='controls' class="bottoni">
 
-               <h4>Controls</h4>
+               Controls
 
                <ul>
                   <li><button id='in' onclick='zoomIn();'>Zoom In</button> | <button id='out' onclick='zoomOut();'>Zoom Out</button></li>
@@ -43,6 +44,8 @@
                   <li><button id='wOn' onclick='wireframeOn();'>Wireframe On</button> | <button id='wOff' onclick='wireframeOff();'>Wireframe Off</button></li>
                   <li><button id='front' onclick='front();'>Front</button> | <button id='back' onclick='back();'>Back</button></li>
                   <li><button id='left' onclick='left();'>Left</button> | <button id='right' onclick='right();'>Right</button></li>
+
+                  <li><button id='in' onclick='scalePlus();'>SCALE +</button> | <button id='out' onclick='scaleMinus();'>SCALE -</button></li>
 
                </ul>
         </div> <!--controls-->

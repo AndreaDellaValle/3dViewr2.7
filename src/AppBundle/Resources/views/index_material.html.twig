@@ -37,7 +37,7 @@
 
 	<body>
 		<div id="info">
-		three.js - OBJMTLLoader test
+		WebGL example
 		</div>
 
 		<div id='controls'>
@@ -46,11 +46,11 @@
 
                <ul>
                   <li><button id='in' onclick='zoomIn();'>Zoom In</button> | <button id='out' onclick='zoomOut();'>Zoom Out</button></li>
-                  <li><button id='rOn' onclick='rotateOn();'>Rotate On</button> | <button id='rOff' onclick='rotateOff();'>Rotate Off</button></li>
                   <li><button id='wOn' onclick='wireframeOn();'>Wireframe On</button> | <button id='wOff' onclick='wireframeOff();'>Wireframe Off</button></li>
                   <li><button id='front' onclick='front();'>Front</button> | <button id='back' onclick='back();'>Back</button></li>
                   <li><button id='left' onclick='left();'>Left</button> | <button id='right' onclick='right();'>Right</button></li>
                   <li><button id='in' onclick='scalePlus();'>SCALE +</button> | <button id='out' onclick='scaleMinus();'>SCALE -</button></li>
+                  | <button id='out' onclick='textureChange();'>TEXTURE -</button></li>
 
                </ul>
         </div> <!--controls-->
@@ -68,14 +68,15 @@
 
 			var container, stats;
 
-			var camera, scene, renderer;
+			var camera, scene, controls, geometry, material, mesh, renderer;
 
 			var mouseX = 0, mouseY = 0;
 
 			var windowHalfX = window.innerWidth / 2;
 			var windowHalfY = window.innerHeight / 2;
 
-
+			var myObject = null;
+			
 			init();
 			animate();
 
@@ -85,8 +86,9 @@
 				container = document.createElement( 'div' );
 				document.body.appendChild( container );
 
-				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 100, 4000 );
+				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 4000 );
 				camera.position.z = 500;
+				//camera.position.y = ???;
 
 				// scene
 
@@ -95,8 +97,16 @@
 				var ambient = new THREE.AmbientLight( 0xffffff );
 				scene.add( ambient );
 
-				var directionalLight = new THREE.DirectionalLight( 0xffffff );
-				directionalLight.position.set( 0, 5, 9 ).normalize();
+				var directionalLight = new THREE.DirectionalLight( 0xFFFFFF );
+				directionalLight.position.set( 2, 5, 2 ).normalize();
+				scene.add( directionalLight );
+
+				var directionalLight2 = new THREE.DirectionalLight( 0xFFFFFF );
+				directionalLight.position.set( 2, 5, -2 ).normalize();
+				scene.add( directionalLight );
+
+				var directionalLight3 = new THREE.DirectionalLight( 0xFFFFFF );
+				directionalLight.position.set( -5, 5, 0 ).normalize();
 				scene.add( directionalLight );
 
 				// model
@@ -115,13 +125,15 @@
 				THREE.Loader.Handlers.add( /\.dds$/i, new THREE.DDSLoader() );
 
 				var loader = new THREE.OBJMTLLoader();
-				loader.load( '../3d_file_storage/lambo/Avent.obj', '../3d_file_storage/lambo/Avent.mtl', function ( object ) {
+				loader.load( '../3d_file_storage/Avent.obj', '../3d_file_storage/Avent.mtl', function ( object ) {
 
 					object.position.y = 0;
-					object.scale.x = 50;
-					object.scale.y = 50;
-					object.scale.z = 50;
+					object.scale.x = 30;
+					object.scale.y = 30;
+					object.scale.z = 30;
 					scene.add( object );
+
+					myObject = object;
 
 				}, onProgress, onError );
 
@@ -191,11 +203,14 @@
             }
 
             function scalePlus(){
-            object.scale.x += 10;
-			object.scale.y += 10;
-			object.scale.z += 10;
-			camera.updateProjectionMatrix();
-			scale = object.scale.x;
+            myObject.scale.x += 10;
+			myObject.scale.y += 10;
+			myObject.scale.z += 10;
+			}
+			function scaleMinus(){
+            myObject.scale.x -= 10;
+			myObject.scale.y -= 10;
+			myObject.scale.z -= 10;
 			}
             //rotazione
             function rotateOn(){
@@ -205,9 +220,11 @@
               rotate = false;
             }
             //wireframe
+            
+            mesh = new THREE.Mesh();
             function wireframeOn(){
               mesh.material.wireframe = true;
-              mesh.material.color = new THREE.Color( 0x6893DE  );
+              mesh.material.color = new THREE.Color( 0xffffff  );
             }
             function wireframeOff(){
               mesh.material.wireframe = false;
@@ -217,22 +234,27 @@
             function front(){
               scene.remove(camera);
               addCamera(0, -6, 1);
-              mesh.rotation.z = 0;
-              camera.fov = zoom;
+              camera.rotation.z = 0;
+              
               camera.updateProjectionMatrix();
             }
             function back(){
               front();
-              mesh.rotation.z = 3.2; 
+              mesh.rotation.z = 3.2;
             }
             function left(){
               front();
-              mesh.rotation.z = 4.8;             
+              mesh.rotation.z = 4.8;
             }
             function right(){
               front();
-              mesh.rotation.z = 1.6;             
+              mesh.rotation.z = 1.6;
             }
+            function textureChange(){
+            var texture = THREE.ImageUtils.loadTexture( "textures/UV_Grid_Sm.jpg" );
+				texture.wrapS = THREE.RepeatWrapping;
+				texture.wrapT = THREE.RepeatWrapping;
+				texture.repeat.set( 4, 4 );}
 		</script>
 
 	</body>

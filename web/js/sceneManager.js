@@ -1,4 +1,7 @@
 			//var fileName = "../3d_file_storage/porsche.obj";
+//			document.body.addEventListener("keydown", function() {
+//  			THREEx.FullScreen.request();
+//			}, false);
 
 			var fileName =
 			"../3d_file_storage/" + document.getElementById("weila").innerHTML + ".obj";
@@ -7,12 +10,13 @@
 			var mouseX = 0, mouseY = 0;
 			var windowHalfX = window.innerWidth / 2;
 			var windowHalfY = window.innerHeight / 2;
+			var myObject = null;
 			init();
 			animate();
 			function init() {
 				container = document.createElement( 'div' );
 				document.body.appendChild( container );
-				camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 10, 2000 );
+				camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 10, 8000 );
 				camera.position.x = 0;
 				camera.position.y = 5;
 				camera.position.z = -23;
@@ -21,7 +25,7 @@
 				var ambient = new THREE.AmbientLight( 0x808080 );
 				scene.add( ambient );
 				var directionalLight = new THREE.DirectionalLight( 0xffeedd );
-				directionalLight.position.set( 70, 10, 10 );
+				directionalLight.position.set( 70, 10, 80 );
 				scene.add( directionalLight )
 				
 				var manager = new THREE.LoadingManager();
@@ -40,7 +44,7 @@
 				var onError = function ( xhr ) {
 				};
 				var loader = new THREE.ImageLoader( manager );
-				loader.load( '../textures/UV_Grid_Sm.jpg', function ( image ) {
+				loader.load( "../textures/" + document.getElementById("texture").innerHTML + ".jpg", function ( image ) {
 					texture.image = image;
 					texture.needsUpdate = true;
 				} );
@@ -55,7 +59,13 @@
 					object.position.y = 0;
 					object.position.z = 0;
 					object.position.x = 0;
+					object.scale.x = 30;
+					object.scale.y = 30;
+					object.scale.z = 30;
 					scene.add( object );
+
+					myObject = object;
+	
 				}, onProgress, onError );
 				//
 				renderer = new THREE.WebGLRenderer();
@@ -99,3 +109,15 @@
               camera.updateProjectionMatrix();
               zoom = camera.position.z;
             }
+
+            function scalePlus(){
+            myObject.scale.x += 10;
+			myObject.scale.y += 10;
+			myObject.scale.z += 10;
+			}
+
+			function scaleMinus(){
+            myObject.scale.x -= 10;
+			myObject.scale.y -= 10;
+			myObject.scale.z -= 10;
+			}

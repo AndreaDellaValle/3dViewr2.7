@@ -1,4 +1,4 @@
-# MTL written from /Users/manapoly/Desktop/Yusup/Models/Land/Lamborghini/Aventador/Aventador/Avent.obj
+# MTL written from Avent.obj
 newmtl BREMSE1
 Kd 0.435294 0.435294 0.435294
 Ns 256
@@ -167,7 +167,7 @@ d 1
 illum 2
 Ka 0 0 0
 Ks 0.05 0.05 0.05
-map_Kd /Users/manapoly/Desktop/Yusup/Models/Land/Lamborghini/Aventador/Aventador interior/interior_lod0.tga
+map_Kd interior_lod0.tga
 newmtl lines
 Kd 1 1 1
 Ns 256
@@ -182,7 +182,7 @@ d 1
 illum 2
 Ka 0 0 0
 Ks 0.05 0.05 0.05
-map_Kd /Users/manapoly/Desktop/Yusup/Models/Land/Lamborghini/Aventador/Aventador interior/interior_lod0.tga
+map_Kd interior_lod0.tga
 newmtl signs
 Kd 1 1 1
 Ns 256
@@ -190,7 +190,7 @@ d 1
 illum 2
 Ka 0 0 0
 Ks 0.05 0.05 0.05
-map_Kd /Users/manapoly/Desktop/Yusup/Models/Land/Lamborghini/Aventador/Aventador interior/interior_lod0.tga
+map_Kd interior_lod0.tga
 newmtl speedometer
 Kd 1 1 1
 Ns 256
@@ -198,5 +198,5 @@ d 1
 illum 2
 Ka 0 0 0
 Ks 0.05 0.05 0.05
-map_Kd /Users/manapoly/Desktop/Yusup/Models/Land/Lamborghini/Aventador Hi-Poly [Squir]/aventador-new/gaudges.jpg
-map_Ka /Users/manapoly/Desktop/Yusup/Models/Land/Lamborghini/Aventador Hi-Poly [Squir]/aventador-new/gaudges.jpg
+map_Kd gaudges.jpg
+map_Ka gaudges.jpg
